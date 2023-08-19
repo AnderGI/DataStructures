@@ -40,7 +40,9 @@ const prependExtension = (value) => ({
 //at(index) returns the node at the given index
 const atExtension = (index) => ({
   at(index) {
-    if (index < 0) return null;
+    if (index < 0) return null; //check for possible index
+    //from the head traverse until tail
+    //or until the number of iterations is lower than the index given
     let currentNode = this.head;
     let iterations = 0;
     while (currentNode.next && iterations < index) {
@@ -49,6 +51,8 @@ const atExtension = (index) => ({
     }
 
     if (iterations == index) return currentNode;
+    //if not the while loop has ended cause we have reached the tail
+    //currentNode.next === null
     return null;
   },
 });
