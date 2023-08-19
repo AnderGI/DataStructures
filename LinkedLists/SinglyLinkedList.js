@@ -105,6 +105,29 @@ const containsExtension = (value) => ({
   },
 });
 
+/**
+ * toString represents your LinkedList objects as strings, so you can print them out
+ * and preview them in the console.
+ * The format should be: ( value ) -> ( value ) -> ( value ) -> null
+ */
+
+const toStringExtension = () => ({
+  toString() {
+    let message = "";
+    let currentNode = this.head;
+    while (currentNode) {
+      message += `( ${currentNode.value} ) -> `;
+      currentNode = currentNode.next;
+    }
+
+    if (!currentNode) {
+      message += "null";
+    }
+
+    return message;
+  },
+});
+
 //a way to make it open for changes but close for modification
 const SinglyLinkedListMethods = [
   prependExtension,
@@ -113,6 +136,7 @@ const SinglyLinkedListMethods = [
   popExtension,
   findExtension,
   containsExtension,
+  toStringExtension,
 ];
 
 const SinglyLinkedListProto = () => {
@@ -144,7 +168,11 @@ console.log(singlyLinkedList.at(1));
 singlyLinkedList.append(20);
 singlyLinkedList.append(25);
 singlyLinkedList.pop();
-console.log(singlyLinkedList.find(25));
-console.log(singlyLinkedList.find(15));
-console.log(singlyLinkedList.contains(25));
-console.log(singlyLinkedList.contains(15));
+console.log("25 index " + singlyLinkedList.find(25));
+console.log("15 index " + singlyLinkedList.find(15));
+console.log("25 " + singlyLinkedList.contains(25));
+console.log("15 " + singlyLinkedList.contains(15));
+singlyLinkedList.append(30);
+singlyLinkedList.append(35);
+
+console.log(singlyLinkedList.toString());
