@@ -1,0 +1,13 @@
+{
+  "name": "datastructures",
+  "version": "1.0.0",
+  "description": "This repo will hold the necessary code to create the different data structures I learn.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
