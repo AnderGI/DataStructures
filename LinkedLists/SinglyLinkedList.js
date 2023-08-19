@@ -37,8 +37,28 @@ const prependExtension = (value) => ({
   },
 });
 
+//at(index) returns the node at the given index
+const atExtension = (index) => ({
+  at(index) {
+    if (index < 0) return null;
+    let currentNode = this.head;
+    let iterations = 0;
+    while (currentNode.next && iterations < index) {
+      currentNode = currentNode.next;
+      iterations++;
+    }
+
+    if (iterations == index) return currentNode;
+    return null;
+  },
+});
+
 //a way to make it open for changes but close for modification
-const SinglyLinkedListMethods = [prependExtension, appendExtension];
+const SinglyLinkedListMethods = [
+  prependExtension,
+  appendExtension,
+  atExtension,
+];
 
 const SinglyLinkedListProto = () => {
   const proto = {};
@@ -66,3 +86,4 @@ singlyLinkedList.prepend(5); // add to the beginning
 singlyLinkedList.prepend(10); // add to the beginning
 singlyLinkedList.append(15); // add to the end
 console.log(singlyLinkedList);
+console.log(singlyLinkedList.at(1));
