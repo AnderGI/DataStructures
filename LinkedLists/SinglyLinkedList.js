@@ -57,11 +57,35 @@ const atExtension = (index) => ({
   },
 });
 
+//pop removes the last element from the list
+const popExtension = () => ({
+  pop() {
+    //from the head traverse until tail reached then previousNode becomes the tail
+    let previousNode = null;
+    let currentNode = this.head;
+
+    while (currentNode.next) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
+
+    //we are on the tail
+    if (!currentNode.next) {
+      this.tail = previousNode;
+      previousNode.next = null; //remove pointer
+      //reduce size
+      this.size--;
+    }
+    return this.tail;
+  },
+});
+
 //a way to make it open for changes but close for modification
 const SinglyLinkedListMethods = [
   prependExtension,
   appendExtension,
   atExtension,
+  popExtension,
 ];
 
 const SinglyLinkedListProto = () => {
@@ -89,5 +113,9 @@ const singlyLinkedList = SinglyLinkedList();
 singlyLinkedList.prepend(5); // add to the beginning
 singlyLinkedList.prepend(10); // add to the beginning
 singlyLinkedList.append(15); // add to the end
-console.log(singlyLinkedList);
 console.log(singlyLinkedList.at(1));
+singlyLinkedList.append(20);
+singlyLinkedList.append(25);
+console.log(singlyLinkedList);
+singlyLinkedList.pop();
+console.log(singlyLinkedList);
