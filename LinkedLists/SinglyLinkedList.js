@@ -96,6 +96,15 @@ const findExtension = (value) => ({
   },
 });
 
+//contains(value) returns true
+//if the passed in value is in the list and otherwise returns false.
+const containsExtension = (value) => ({
+  contains(value) {
+    const hasBeenFound = this.find(value); //or null or the index
+    return hasBeenFound !== null; //not found false cause null === null; otherwise true
+  },
+});
+
 //a way to make it open for changes but close for modification
 const SinglyLinkedListMethods = [
   prependExtension,
@@ -103,6 +112,7 @@ const SinglyLinkedListMethods = [
   atExtension,
   popExtension,
   findExtension,
+  containsExtension,
 ];
 
 const SinglyLinkedListProto = () => {
@@ -136,3 +146,5 @@ singlyLinkedList.append(25);
 singlyLinkedList.pop();
 console.log(singlyLinkedList.find(25));
 console.log(singlyLinkedList.find(15));
+console.log(singlyLinkedList.contains(25));
+console.log(singlyLinkedList.contains(15));
