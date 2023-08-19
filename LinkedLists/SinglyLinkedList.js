@@ -80,12 +80,29 @@ const popExtension = () => ({
   },
 });
 
+//find(value) returns the index of the node containing value, or null if not found.
+const findExtension = (value) => ({
+  find(value) {
+    let currentNode = this.head;
+    let index = 0;
+    //until tail
+    while (currentNode.next && currentNode.value !== value) {
+      currentNode = currentNode.next;
+      index++;
+    }
+
+    if (currentNode.value === value) return index;
+    return null; //we have reached the tail and its value is not equal
+  },
+});
+
 //a way to make it open for changes but close for modification
 const SinglyLinkedListMethods = [
   prependExtension,
   appendExtension,
   atExtension,
   popExtension,
+  findExtension,
 ];
 
 const SinglyLinkedListProto = () => {
@@ -116,6 +133,6 @@ singlyLinkedList.append(15); // add to the end
 console.log(singlyLinkedList.at(1));
 singlyLinkedList.append(20);
 singlyLinkedList.append(25);
-console.log(singlyLinkedList);
 singlyLinkedList.pop();
-console.log(singlyLinkedList);
+console.log(singlyLinkedList.find(25));
+console.log(singlyLinkedList.find(15));
