@@ -113,12 +113,25 @@ const deleteNodeExtension = () => ({
   },
 });
 
+const findNodeExtension = () => ({
+  //Write a find function which accepts a value and returns the node with the given value.
+  find(value = 7, currentNode = this.root) {
+    if (!currentNode) return null;
+    else if (value === currentNode.data) return currentNode;
+    else if (value > currentNode.data)
+      return this.find(value, (currentNode = currentNode.right));
+    else if (value < currentNode.data)
+      return this.find(value, (currentNode = currentNode.left));
+  },
+});
+
 const treeExtensions = [
   sortElementsExtension,
   buildTreeExtension,
   prettyPrintExtension,
   insertNodeExtension,
   deleteNodeExtension,
+  findNodeExtension,
 ];
 
 const extensionsPrototype = () => {
@@ -149,3 +162,5 @@ BST.delete(43);
 console.log("");
 console.log("43 DELETED TWO LEAF NODES");
 BST.prettyPrint(BST.root);
+console.log(BST.find());
+console.log(BST.find(25));
