@@ -125,6 +125,32 @@ const findNodeExtension = () => ({
   },
 });
 
+const levelOrderExtension = () => ({
+  levelOrderIt() {
+    const levelOrderArray = [];
+    const queu = [];
+    queu.push(this.root);
+    while (queu.length > 0) {
+      const currentEl = queu.shift();
+      if (currentEl.left) queu.push(currentEl.left);
+      if (currentEl.right) queu.push(currentEl.right);
+      levelOrderArray.push(currentEl.data);
+    }
+
+    return levelOrderArray;
+  },
+});
+
+const depthFirstTraversalExtension = () => ({
+  inorderArray: [],
+  inorder(node = this.root) {
+    if (!node) return;
+    this.inorder(node.left);
+    this.inorderArray.push(node.data);
+    this.inorder(node.right);
+  },
+});
+
 const treeExtensions = [
   sortElementsExtension,
   buildTreeExtension,
@@ -132,6 +158,8 @@ const treeExtensions = [
   insertNodeExtension,
   deleteNodeExtension,
   findNodeExtension,
+  levelOrderExtension,
+  depthFirstTraversalExtension,
 ];
 
 const extensionsPrototype = () => {
@@ -151,16 +179,9 @@ const BalanceBinarySearchTree = (array) => {
   return Object.assign(Object.create(extensions), basicData);
 };
 
-const BST = BalanceBinarySearchTree([3, 5, 2, 12, 56, 43, 1, 7, 6, 23]);
+const BST = BalanceBinarySearchTree([200, 10, 150, 30, 300, 20, 100]);
 BST.buildTree();
-BST.insert(NodeBST(25));
-BST.insert(NodeBST(32));
-BST.insert(NodeBST(47));
 BST.prettyPrint(BST.root);
-
-BST.delete(43);
-console.log("");
-console.log("43 DELETED TWO LEAF NODES");
-BST.prettyPrint(BST.root);
-console.log(BST.find());
-console.log(BST.find(25));
+console.log(BST.levelOrderIt());
+BST.inorder();
+console.log(BST.inorderArray);
