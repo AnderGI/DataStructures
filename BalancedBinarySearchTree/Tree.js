@@ -77,11 +77,48 @@ const insertNodeExtension = () => ({
   },
 });
 
+const deleteNodeExtension = () => ({
+  delete(value, node = this.root) {
+    //SEARCH FOR CORRESPONDING NODE
+    if (value > node.data) node.right = this.delete(value, node.right);
+    else if (value < node.data) node.left = this.delete(value, node.left);
+    else {
+      //LOOK FOR HOW MANY LEAF NODES IT HAS
+      //NO LEAF NODES
+      if (node.left !== null && node.right !== null) {
+        let previousNode;
+        let currentNode = node.right;
+        while (currentNode.left) {
+          previousNode = currentNode;
+          currentNode = currentNode.left;
+        }
+        previousNode.left = null;
+        node.data = currentNode.data;
+      } else if (node.left !== null || node.right !== null) {
+        //ONE LEAF NODE
+        if (node.left !== null && node.right === null) {
+          //LEAFT LEAF NODE YES RIGHT ONE NO
+          node = node.left;
+          node.left = null;
+        } else if (node.left === null && node.right !== null) {
+          //RIGHT LEAF NODE YES LEFT ONE NO
+          node = node.right;
+          node.right = null;
+        }
+      } else if (node.left === null && node.right === null) {
+        node = null;
+      }
+    }
+    return node;
+  },
+});
+
 const treeExtensions = [
   sortElementsExtension,
   buildTreeExtension,
   prettyPrintExtension,
   insertNodeExtension,
+  deleteNodeExtension,
 ];
 
 const extensionsPrototype = () => {
@@ -104,4 +141,11 @@ const BalanceBinarySearchTree = (array) => {
 const BST = BalanceBinarySearchTree([3, 5, 2, 12, 56, 43, 1, 7, 6, 23]);
 BST.buildTree();
 BST.insert(NodeBST(25));
+BST.insert(NodeBST(32));
+BST.insert(NodeBST(47));
+BST.prettyPrint(BST.root);
+
+BST.delete(43);
+console.log("");
+console.log("43 DELETED TWO LEAF NODES");
 BST.prettyPrint(BST.root);
