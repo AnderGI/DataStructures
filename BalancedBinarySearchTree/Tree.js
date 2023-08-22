@@ -165,6 +165,26 @@ const depthFirstTraversalExtension = () => ({
   },
 });
 
+const depthExtension = () => ({
+  //number of edges between root node and node
+  findDepth(node, currentNode = this.root, depth = 0) {
+    if (node === null || currentNode === null) return;
+    if (node.data === currentNode.data) return depth;
+    else if (node.data < currentNode.data)
+      return this.findDepth(
+        node,
+        (currentNode = currentNode.left),
+        (depth += 1)
+      );
+    else if (node.data > currentNode.data)
+      return this.findDepth(
+        node,
+        (currentNode = currentNode.right),
+        (depth += 1)
+      );
+  },
+});
+
 const treeExtensions = [
   sortElementsExtension,
   buildTreeExtension,
@@ -174,6 +194,7 @@ const treeExtensions = [
   findNodeExtension,
   levelOrderExtension,
   depthFirstTraversalExtension,
+  depthExtension,
 ];
 
 const extensionsPrototype = () => {
@@ -196,7 +217,6 @@ const BalanceBinarySearchTree = (array) => {
 const BST = BalanceBinarySearchTree([200, 10, 150, 30, 300, 20, 100]);
 BST.buildTree();
 BST.prettyPrint(BST.root);
-console.log(BST.levelOrderIt());
-console.log(BST.inorder());
-console.log(BST.preorder());
-console.log(BST.postorder());
+console.log("DEPTH OF 20 AND 300");
+console.log(BST.findDepth(BST.find(20)));
+console.log(BST.findDepth(BST.find(300)));
