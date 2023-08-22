@@ -142,12 +142,26 @@ const levelOrderExtension = () => ({
 });
 
 const depthFirstTraversalExtension = () => ({
-  inorderArray: [],
-  inorder(node = this.root) {
+  inorder(node = this.root, inorderArray = []) {
     if (!node) return;
-    this.inorder(node.left);
-    this.inorderArray.push(node.data);
-    this.inorder(node.right);
+    this.inorder(node.left, inorderArray);
+    inorderArray.push(node.data);
+    this.inorder(node.right, inorderArray);
+    return inorderArray;
+  },
+  preorder(node = this.root, preorderArray = []) {
+    if (!node) return;
+    preorderArray.push(node.data);
+    this.preorder(node.left, preorderArray);
+    this.preorder(node.right, preorderArray);
+    return preorderArray;
+  },
+  postorder(node = this.root, postorderArray = []) {
+    if (!node) return;
+    this.preorder(node.left, postorderArray);
+    this.preorder(node.right, postorderArray);
+    postorderArray.push(node.data);
+    return postorderArray;
   },
 });
 
@@ -183,5 +197,6 @@ const BST = BalanceBinarySearchTree([200, 10, 150, 30, 300, 20, 100]);
 BST.buildTree();
 BST.prettyPrint(BST.root);
 console.log(BST.levelOrderIt());
-BST.inorder();
-console.log(BST.inorderArray);
+console.log(BST.inorder());
+console.log(BST.preorder());
+console.log(BST.postorder());
