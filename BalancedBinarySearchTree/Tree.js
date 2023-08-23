@@ -33,9 +33,12 @@ const buildTreeExtension = () => ({
     treeRoot.left = this.treeCreation(array.slice(0, middleIndex));
     return treeRoot;
   },
-  buildTree() {
-    this.elements = this.sortElements(this.elements);
+  buildTree(areElemenetsSorted = false) {
+    this.elements = areElemenetsSorted
+      ? this.inorder()
+      : this.sortElements(this.elements);
     this.root = this.treeCreation(this.elements);
+    return this.root;
   },
 });
 
@@ -185,6 +188,28 @@ const depthExtension = () => ({
   },
 });
 
+const heightExtension = () => ({
+  //number of edges between node and leaf node
+  findHeight(node) {
+    if (!node) return -1;
+    const rightHeight = this.findHeight(node.right);
+    const leftHeight = this.findHeight(node.left);
+    return Math.max(leftHeight, rightHeight) + 1;
+  },
+});
+
+const balanceExtension = () => ({
+  isBalanced(rootNode = this.root) {
+    if (rootNode === null) return -1;
+    const leftHeight = this.isBalanced(rootNode.left);
+    const rightHeight = this.isBalanced(rootNode.right);
+    return Math.abs(leftHeight - rightHeight) <= 1;
+  },
+  rebalance() {
+    return this.buildTree(true);
+  },
+});
+
 const treeExtensions = [
   sortElementsExtension,
   buildTreeExtension,
@@ -195,6 +220,8 @@ const treeExtensions = [
   levelOrderExtension,
   depthFirstTraversalExtension,
   depthExtension,
+  heightExtension,
+  balanceExtension,
 ];
 
 const extensionsPrototype = () => {
@@ -207,16 +234,15 @@ const extensionsPrototype = () => {
 
 const BalanceBinarySearchTree = (array) => {
   const basicData = {
-    elements: array,
+    elements: [...new Set(array)],
     root: null,
   };
   const extensions = extensionsPrototype();
   return Object.assign(Object.create(extensions), basicData);
 };
 
-const BST = BalanceBinarySearchTree([200, 10, 150, 30, 300, 20, 100]);
-BST.buildTree();
-BST.prettyPrint(BST.root);
-console.log("DEPTH OF 20 AND 300");
-console.log(BST.findDepth(BST.find(20)));
-console.log(BST.findDepth(BST.find(300)));
+const BST = BalanceBinarySearchTree([200, 10, 150, 30, 300, 10, 20, 100]);
+BST.prettyPrint(BST.buildTree());
+console.log(BST.findHeight(BST.find(200)));
+console.log(BST.inorder());
+console.log(BST.prettyPrint(BST.rebalance()));
