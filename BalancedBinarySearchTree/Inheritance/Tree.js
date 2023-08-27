@@ -1,4 +1,4 @@
-import { sort } from "./Utils/MergeSort.js";
+import { sort } from "../../Utils/MergeSort.js";
 import { Node } from "./Node.js";
 const array = [3, 1, 4, 67, 54, 32, 7, 5, 89, 2, 21, 34];
 export class BST {
