@@ -91,4 +91,41 @@ class LinkedList {
     message += "null";
     return message;
   }
+
+  //insertAt(value, index)
+  //that inserts a new node with the provided value at the given index.
+  insertAt(value, index) {
+    let previousNode = null;
+    let currentNode = this.head;
+    let pointer = 0;
+    while (currentNode !== null && pointer < index) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+      pointer++;
+    }
+
+    if (currentNode === null) {
+      return null;
+    }
+
+    const toInsertNode = new NodeClass(value);
+    previousNode.next = toInsertNode;
+    toInsertNode.next = currentNode;
+    return toInsertNode;
+  }
+
+  //removeAt(index) that removes the node at the given index.
+  removeAt(index) {
+    let pointer = 0;
+    let previousNode = null;
+    let currentNode = this.head;
+    while (currentNode !== null && pointer < index) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+      pointer++;
+    }
+    if (currentNode !== null) return null;
+    previousNode.next = currentNode.next;
+    return previousNode;
+  }
 }
