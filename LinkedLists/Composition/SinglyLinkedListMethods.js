@@ -1,4 +1,4 @@
-import { NodeFactory } from "./Node.js";
+import { NodeFactory } from "../Node.js";
 //append(value) adds a new node containing value to the end of the list
 const appendExtension = () => ({
   append(value) {
